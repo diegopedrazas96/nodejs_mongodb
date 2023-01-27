@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  userapp:
+    depends_on:
+      - db
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    image: user-docker
+    container_name: userapp
+    restart: always 
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      MONGODB: ${MONGODB}
+      PORT: ${PORT}
+    # volumes:
+    #   - ./:/var/www/user
+
+  db:
+    image: mongo:5
+    container_name: mongo-user
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGODB_DATABASE: nest-user
+    # volumes:
+    #   - ./mongo:/data/db
